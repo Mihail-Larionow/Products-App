@@ -2,6 +2,7 @@ package com.michel.productsapp.presentation
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -24,6 +25,11 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        val textView = findViewById<TextView>(R.id.textView)
+
+        val products = viewModel.getData()
+        textView.text = products.something
+
         Log.v("APP", "MainActivity creating");
     }
 
@@ -34,20 +40,18 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        Log.v("APP", "MainActivity starting");
+        Log.v("APP", "MainActivity resuming");
 
     }
 
     override fun onPause() {
-        super.onPause()
         Log.v("APP", "MainActivity pausing");
-
+        super.onPause()
     }
 
     override fun onStop() {
-        super.onStop()
         Log.v("APP", "MainActivity stopping");
-
+        super.onStop()
     }
 
 }
