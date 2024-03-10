@@ -1,12 +1,12 @@
 package com.michel.productsapp.di
 
-import com.michel.domain.usecase.GetDataUseCase
+import com.michel.domain.usecase.LoadDataUseCase
 import org.koin.dsl.module
 
 val domainModule = module {
 
-    factory<GetDataUseCase> {
-        GetDataUseCase(iUserRepository = get())
+    factory<LoadDataUseCase> {
+        LoadDataUseCase(iUserRepository = get())
     }
 
 }

@@ -8,7 +8,7 @@ val appModule = module {
 
     viewModel<MainViewModel>{
         MainViewModel(
-            getDataUseCase = get()
+            loadDataUseCase = get()
         )
     }
 

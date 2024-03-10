@@ -9,6 +9,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModel
 import com.michel.productsapp.R
+import com.michel.productsapp.model.LoadEvent
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
@@ -27,8 +28,10 @@ class MainActivity : AppCompatActivity() {
 
         val textView = findViewById<TextView>(R.id.textView)
 
-        val products = viewModel.getData()
-        textView.text = products.something
+        viewModel.send(LoadEvent())
+        viewModel.state.observe(this){
+            textView.text = "${it.something}"
+        }
 
         Log.v("APP", "MainActivity creating");
     }
