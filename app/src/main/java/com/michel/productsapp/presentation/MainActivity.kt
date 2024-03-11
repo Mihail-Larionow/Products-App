@@ -1,7 +1,9 @@
 package com.michel.productsapp.presentation
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +12,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModel
 import com.michel.productsapp.R
 import com.michel.productsapp.model.LoadEvent
+import com.michel.productsapp.presentation.single.SingleProduct
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
@@ -26,11 +29,11 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        val textView = findViewById<TextView>(R.id.textView)
-
-        viewModel.send(LoadEvent())
-        viewModel.state.observe(this){
-            textView.text = "${it.something}"
+        val btn = findViewById<Button>(R.id.button)
+        btn.setOnClickListener{
+            val intent = Intent(this, SingleProduct::class.java)
+            intent.putExtra("id", 1)
+            this.startActivity(intent)
         }
 
         Log.v("APP", "MainActivity creating");

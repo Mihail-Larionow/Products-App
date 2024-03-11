@@ -34,6 +34,12 @@ android {
 
 dependencies {
     implementation(project(":domain"))
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.rxjava)
+    implementation(libs.rxandroid)
+    implementation(libs.adapter.rxjava2)
+    implementation(libs.androidx.lifecycle.livedata)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
 }
