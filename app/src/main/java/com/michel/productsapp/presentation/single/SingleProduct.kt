@@ -59,7 +59,9 @@ class SingleProduct : AppCompatActivity() {
         findViewById<TextView>(R.id.product_title).text = it.title
         findViewById<TextView>(R.id.product_description).text = it.title
 
-
+        Glide.with(this)
+            .load(it.thumbnail)
+            .into(findViewById<ImageView>(R.id.product_image))
     }
 
     private fun getViewModel(productId: Int): SingleProductViewModel{

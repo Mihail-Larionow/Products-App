@@ -1,5 +1,6 @@
 package com.michel.data.api
 
+import com.michel.data.ssl.SSLSocket
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -34,32 +35,10 @@ class ProductDBClient {
             return@Interceptor chain.proceed(request)
         }
 
-        val cert: X509TrustManager = object : X509TrustManager {
-            @Throws(CertificateException::class)
-            override fun checkClientTrusted(
-                chain: Array<X509Certificate>,
-                authType: String
-            ) {}
-
-            @Throws(CertificateException::class)
-            override fun checkServerTrusted(
-                chain: Array<X509Certificate>,
-                authType: String
-            ) {}
-            override fun getAcceptedIssuers(): Array<X509Certificate> {
-                return arrayOf()
-            }
-
-        }
-        val trustAllCerts = arrayOf<TrustManager>(
-            cert
-        )
-
-        val sslContext = SSLContext.getInstance("SSL")
-        sslContext.init(null, trustAllCerts, SecureRandom())
+        val sslSocket = SSLSocket()
 
         val okHttpClient = OkHttpClient.Builder()
-            .sslSocketFactory(sslContext.getSocketFactory(), cert)
+            .sslSocketFactory(sslSocket.getFactory(), sslSocket.x509TrustManager)
             .addInterceptor(requestInterceptor)
             .connectTimeout(60, TimeUnit.SECONDS)
             .build()

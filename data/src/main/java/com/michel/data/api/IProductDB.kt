@@ -11,4 +11,6 @@ interface IProductDB {
     @GET("{product_id}")
     fun getProductDetails(@Path("product_id") id: Int): Single<Product>
 
+
+
 }
