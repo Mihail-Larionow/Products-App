@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">GetProducts</string>
+    <string name="productCard">It\'s just a simple product card</string>
 </resources>

@@ -46,7 +46,9 @@ class SingleProduct : AppCompatActivity() {
 
     private fun bindUI(product: Product){
         findViewById<TextView>(R.id.product_brand).text = product.brand
-        findViewById<TextView>(R.id.product_price).text = "${product.price}$ (${product.discountPercentage}%)"
+        findViewById<TextView>(R.id.product_price).text = "${product.price}$"
+        findViewById<TextView>(R.id.product_discount).text = "${product.discountPercentage}%"
+        findViewById<TextView>(R.id.product_rating).text = "Rating: ${product.rating}"
         findViewById<TextView>(R.id.product_title).text = product.title
         findViewById<TextView>(R.id.product_description).text = product.description
 
