@@ -4,12 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
-import androidx.paging.map
-import com.michel.data.network.NetworkState
-import com.michel.data.repository.ProductsRepository
-import com.michel.data.model.Product
-import com.michel.productsapp.model.LoadEvent
-import com.michel.productsapp.model.MainEvent
+import com.michel.productsapp.models.NetworkState
+import com.michel.productsapp.data.repository.ProductsRepository
+import com.michel.productsapp.models.Product
 
 class MainViewModel(
     private val productsRepository: ProductsRepository
@@ -21,20 +18,6 @@ class MainViewModel(
 
     val networkState: LiveData<NetworkState> by lazy{
         productsRepository.getNetworkState()
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-    }
-
-    fun send(event: MainEvent){
-        when(event){
-            is LoadEvent -> loadData()
-        }
-    }
-
-    private fun loadData() {
-
     }
 
 }

@@ -2,7 +2,7 @@ package com.michel.productsapp.presentation.single
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.michel.data.repository.SingleProductRepository
+import com.michel.productsapp.data.repository.SingleProductRepository
 
 @Suppress("UNCHECKED_CAST")
 class SingleProductViewModelFactory(
