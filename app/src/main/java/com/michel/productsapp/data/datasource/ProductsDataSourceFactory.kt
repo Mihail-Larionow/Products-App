@@ -11,10 +11,8 @@ class ProductsDataSourceFactory(private val productAPI: ProductAPI): PagingSourc
     val productsDataSource = MutableLiveData<ProductsDataSource>()
 
     override fun invoke(): PagingSource<Int, Product> {
-        val dataSource = ProductsDataSource(productAPI)
-
+        val dataSource = ProductsDataSource(productAPI = productAPI)
         productsDataSource.postValue(dataSource)
-
         return dataSource
     }
 }

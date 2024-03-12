@@ -10,8 +10,11 @@ class SingleProductViewModelFactory(
     private val productId: Int
 ): ViewModelProvider.Factory{
 
-
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return SingleProductViewModel(singleProductRepository, productId = productId) as T
+        return SingleProductViewModel(
+            singleProductRepository = singleProductRepository,
+            productId = productId
+        ) as T
     }
+
 }

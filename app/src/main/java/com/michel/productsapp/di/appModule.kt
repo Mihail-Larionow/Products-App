@@ -7,6 +7,7 @@ import com.michel.productsapp.presentation.MainViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
+// The required dependencies in the application module are described here
 val appModule = module {
 
     viewModel<MainViewModel>{

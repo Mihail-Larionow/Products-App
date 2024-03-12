@@ -7,8 +7,8 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.liveData
-import com.michel.productsapp.data.api.DEFAULT_LIMIT
 import com.michel.productsapp.data.api.ProductAPI
+import com.michel.productsapp.data.datasource.DEFAULT_LIMIT
 import com.michel.productsapp.data.datasource.ProductsDataSourceFactory
 import com.michel.productsapp.models.NetworkState
 import com.michel.productsapp.models.Product
@@ -32,7 +32,7 @@ class ProductsRepository(private val productAPI: ProductAPI) {
             pagingSourceFactory = productsDataSourceFactory
         )
 
-        return pager.liveData.cachedIn(scope)
+        return pager.liveData.cachedIn(scope = scope)
     }
 
     fun getNetworkState(): LiveData<NetworkState>{

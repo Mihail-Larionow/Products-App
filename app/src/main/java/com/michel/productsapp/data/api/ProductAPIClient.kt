@@ -10,10 +10,10 @@ import java.util.concurrent.TimeUnit
 
 
 const val BASE_URL = "https://dummyjson.com/"
-const val START_SKIP = 0
-const val DEFAULT_LIMIT = 20
 
 class ProductAPIClient {
+
+    // Returns a client through which requests will be made
     fun getClient(): ProductAPI {
 
         val requestInterceptor = Interceptor{chain ->
@@ -31,6 +31,7 @@ class ProductAPIClient {
             return@Interceptor chain.proceed(request)
         }
 
+        // To avoid untrusted certificate exception let's use custom SSLSocket class
         val sslSocket = SSLSocket()
 
         val okHttpClient = OkHttpClient.Builder()

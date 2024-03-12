@@ -11,7 +11,7 @@ import retrofit2.http.Query
 interface ProductAPI {
 
     @GET("products/{product_id}")
-    fun getProductDetails(@Path("product_id") id: Int): Single<Product>
+    fun getSingleProduct(@Path("product_id") productId: Int): Single<Product>
 
     @GET("products")
     suspend fun getProducts(@Query("skip") skip: Int, @Query("limit") limit: Int): Response<Products>

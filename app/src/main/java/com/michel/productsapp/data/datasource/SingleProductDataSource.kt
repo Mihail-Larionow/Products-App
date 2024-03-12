@@ -9,7 +9,11 @@ import com.michel.productsapp.models.Product
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class SingleProductDataSource(private val productAPI: ProductAPI, private val compositeDisposable: CompositeDisposable) {
+// Implementation of data loading
+class SingleProductDataSource(
+    private val productAPI: ProductAPI,
+    private val compositeDisposable: CompositeDisposable
+) {
 
     private val networkStateMutable = MutableLiveData<NetworkState>()
     val networkState: LiveData<NetworkState> = networkStateMutable
@@ -18,12 +22,10 @@ class SingleProductDataSource(private val productAPI: ProductAPI, private val co
     val singleProduct: LiveData<Product> = singleProductMutable
 
     fun fetch(productId: Int){
-
         networkStateMutable.postValue(NetworkState.LOADING)
-
         try{
             compositeDisposable.add(
-                productAPI.getProductDetails(productId)
+                productAPI.getSingleProduct(productId = productId)
                     .subscribeOn(Schedulers.io())
                     .subscribe(
                         {
@@ -41,4 +43,5 @@ class SingleProductDataSource(private val productAPI: ProductAPI, private val co
             Log.e("SingleProductResponse", "${e.message}")
         }
     }
+
 }

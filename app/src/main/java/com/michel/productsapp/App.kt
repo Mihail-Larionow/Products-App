@@ -1,7 +1,6 @@
 package com.michel.productsapp
 
 import android.app.Application
-import android.util.Log
 import com.michel.productsapp.di.appModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -12,8 +11,6 @@ class App: Application() {
 
     override fun onCreate() {
         super.onCreate()
-
-        Log.i("APP", "APPLICATION STARTED")
 
         startKoin{
             androidLogger(Level.DEBUG)

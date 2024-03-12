@@ -1,15 +1,10 @@
 package com.michel.productsapp.models
-
-enum class Status{
-    RUNNING,
-    SUCCESS,
-    FAILED
-}
-class NetworkState(val status: Status, val msg: String) {
+class NetworkState {
 
     companion object{
-        val LOADED: NetworkState = NetworkState(Status.SUCCESS, "Success")
-        val LOADING: NetworkState = NetworkState(Status.RUNNING, "Running")
-        val ERROR: NetworkState = NetworkState(Status.FAILED, "Failure")
+        val LOADED: NetworkState = NetworkState()
+        val LOADING: NetworkState = NetworkState()
+        val ERROR: NetworkState = NetworkState()
     }
+
 }

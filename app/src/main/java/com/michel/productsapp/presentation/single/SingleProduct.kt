@@ -24,23 +24,17 @@ class SingleProduct : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_single_product)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
 
         val productId = intent.getIntExtra("productId", 1)
 
-        val productDB: ProductAPI = ProductAPIClient().getClient()
-        singleProductRepository = SingleProductRepository(productDB)
+        val productAPI: ProductAPI = ProductAPIClient().getClient()
+        singleProductRepository = SingleProductRepository(productAPI = productAPI)
 
-        viewModel = getViewModel(productId)
+        viewModel = getViewModel(productId = productId)
 
         viewModel.singleProduct.observe(this) {
-            bindUI(it)
+            bindUI(product = it)
         }
 
         viewModel.networkState.observe(this) {
@@ -64,6 +58,5 @@ class SingleProduct : AppCompatActivity() {
     private fun getViewModel(productId: Int): SingleProductViewModel{
         return ViewModelProvider(this, SingleProductViewModelFactory(singleProductRepository, productId))[SingleProductViewModel::class.java]
     }
-
 
 }

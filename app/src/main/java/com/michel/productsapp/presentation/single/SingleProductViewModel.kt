@@ -7,13 +7,18 @@ import com.michel.productsapp.data.repository.SingleProductRepository
 import com.michel.productsapp.models.Product
 import io.reactivex.disposables.CompositeDisposable
 
-class SingleProductViewModel(private val singleProductRepository: SingleProductRepository, productId: Int): ViewModel() {
+class SingleProductViewModel(
+    singleProductRepository: SingleProductRepository,
+    productId: Int
+): ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
 
-
     val singleProduct: LiveData<Product> by lazy {
-        singleProductRepository.fetch(compositeDisposable, productId)
+        singleProductRepository.fetch(
+            compositeDisposable = compositeDisposable,
+            productId = productId
+        )
     }
 
     val networkState: LiveData<NetworkState> by lazy{

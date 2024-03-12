@@ -19,6 +19,7 @@ import com.michel.productsapp.presentation.single.SingleProduct
 const val PRODUCT_VIEW_TYPE = 100
 const val NETWORK_VIEW_TYPE = 200
 
+// RecyclerView adapter for displaying products on the screen
 class ProductListAdapter(private val context: Context): PagingDataAdapter<Product, RecyclerView.ViewHolder>(
     ProductDiffCallback()
 ) {
@@ -27,10 +28,10 @@ class ProductListAdapter(private val context: Context): PagingDataAdapter<Produc
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if(getItemViewType(position) == PRODUCT_VIEW_TYPE){
-            (holder as ProductItemViewHolder).bind(getItem(position), context)
+            (holder as ProductItemViewHolder).bind(product = getItem(position), context = context)
         }
         else{
-            (holder as NetworkStateItemViewHolder).bind(networkState)
+            (holder as NetworkStateItemViewHolder).bind(networkState = networkState)
         }
     }
 
@@ -46,6 +47,7 @@ class ProductListAdapter(private val context: Context): PagingDataAdapter<Produc
             NetworkStateItemViewHolder(itemView = view)
         }
     }
+
     override fun getItemCount(): Int {
         return super.getItemCount() + if (hasExtraRow()) 1 else 0
     }
@@ -58,6 +60,7 @@ class ProductListAdapter(private val context: Context): PagingDataAdapter<Produc
         }
     }
 
+    // Sets network state and adds an additional line for the progress bar
     fun setNetworkState(newNetworkState: NetworkState){
         val previousState: NetworkState? = this.networkState
         val hadExtraRow: Boolean = hasExtraRow()
@@ -76,6 +79,8 @@ class ProductListAdapter(private val context: Context): PagingDataAdapter<Produc
         }
     }
 
+    // Checks for an additional line
+    // This line is needed to display the progress bar
     private fun hasExtraRow(): Boolean{
         return networkState != null && networkState != NetworkState.LOADED
     }

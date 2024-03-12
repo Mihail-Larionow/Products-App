@@ -13,8 +13,12 @@ class SingleProductRepository(private val productAPI: ProductAPI) {
 
     fun fetch(compositeDisposable: CompositeDisposable, productId: Int): LiveData<Product> {
 
-        singleProductDataSource = SingleProductDataSource(productAPI, compositeDisposable)
-        singleProductDataSource.fetch(productId)
+        singleProductDataSource = SingleProductDataSource(
+            productAPI = productAPI,
+            compositeDisposable = compositeDisposable
+        )
+
+        singleProductDataSource.fetch(productId = productId)
 
         return singleProductDataSource.singleProduct
     }
