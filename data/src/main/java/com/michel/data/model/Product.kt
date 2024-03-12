@@ -1,4 +1,4 @@
-package com.michel.data.value
+package com.michel.data.model
 
 data class Product(
     val brand: String,

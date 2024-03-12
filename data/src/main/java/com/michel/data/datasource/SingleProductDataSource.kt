@@ -1,43 +1,44 @@
-package com.michel.data.network
+package com.michel.data.datasource
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.michel.data.api.IProductDB
-import com.michel.data.value.Product
+import com.michel.data.api.ProductAPI
+import com.michel.data.network.NetworkState
+import com.michel.data.model.Product
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class SingleProductDataSource(private val iProductDB: IProductDB, private val compositeDisposable: CompositeDisposable) {
+class SingleProductDataSource(private val productAPI: ProductAPI, private val compositeDisposable: CompositeDisposable) {
 
     private val networkStateMutable = MutableLiveData<NetworkState>()
     val networkState: LiveData<NetworkState> = networkStateMutable
 
-    private val productDetailsResponseMutable = MutableLiveData<Product>()
-    val productDetailsResponse: LiveData<Product> = productDetailsResponseMutable
+    private val singleProductMutable = MutableLiveData<Product>()
+    val singleProduct: LiveData<Product> = singleProductMutable
 
-    fun fetchProductDetails(productId: Int){
+    fun fetch(productId: Int){
 
         networkStateMutable.postValue(NetworkState.LOADING)
 
         try{
             compositeDisposable.add(
-                iProductDB.getProductDetails(productId)
+                productAPI.getProductDetails(productId)
                     .subscribeOn(Schedulers.io())
                     .subscribe(
                         {
-                            productDetailsResponseMutable.postValue(it)
+                            singleProductMutable.postValue(it)
                             networkStateMutable.postValue(NetworkState.LOADED)
                         },
                         {
                             networkStateMutable.postValue(NetworkState.ERROR)
-                            Log.e("ProductResponse", it.message!!)
+                            Log.e("SingleProductResponse", "${it.message}")
                         }
                     )
             )
         }
         catch(e: Exception){
-            Log.e("ProductResponse", "exception")
+            Log.e("SingleProductResponse", "${e.message}")
         }
     }
 }

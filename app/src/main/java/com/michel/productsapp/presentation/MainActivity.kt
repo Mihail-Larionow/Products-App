@@ -1,23 +1,27 @@
 package com.michel.productsapp.presentation
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.widget.Button
-import android.widget.TextView
+import android.view.View
+import android.widget.ProgressBar
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.michel.data.api.ProductAPI
+import com.michel.data.api.ProductDBClient
+import com.michel.data.network.NetworkState
+import com.michel.data.repository.ProductsRepository
 import com.michel.productsapp.R
-import com.michel.productsapp.model.LoadEvent
-import com.michel.productsapp.presentation.single.SingleProduct
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import com.michel.productsapp.adapter.ProductListAdapter
+import com.michel.productsapp.adapter.PRODUCT_VIEW_TYPE
 
 class MainActivity : AppCompatActivity() {
 
-    private val viewModel by viewModel<MainViewModel>()
+    private lateinit var viewModel: MainViewModel
+    private lateinit var productsRepository: ProductsRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,35 +33,47 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        val btn = findViewById<Button>(R.id.button)
-        btn.setOnClickListener{
-            val intent = Intent(this, SingleProduct::class.java)
-            intent.putExtra("id", 1)
-            this.startActivity(intent)
+        val api: ProductAPI = ProductDBClient().getClient()
+
+        productsRepository = ProductsRepository(api)
+
+        viewModel = getViewModel()
+
+        val adapter = ProductListAdapter(this)
+
+        val gridLayoutManager = GridLayoutManager(this, 2)
+
+        gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup(){
+            override fun getSpanSize(position: Int): Int {
+                val viewType = adapter.getItemViewType(position)
+                return if(viewType == PRODUCT_VIEW_TYPE) 1
+                else 2
+            }
         }
 
-        Log.v("APP", "MainActivity creating");
+        val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
+        val progressBar = findViewById<ProgressBar>(R.id.progress_bar)
+
+        recyclerView.layoutManager = gridLayoutManager
+        recyclerView.setHasFixedSize(true)
+        recyclerView.adapter = adapter
+
+        viewModel.productPagedList.observe(this) {
+            adapter.submitData(this.lifecycle, it)
+        }
+
+        viewModel.networkState.observe(this) {
+            progressBar.visibility =
+                if (viewModel.listIsEmpty() && it == NetworkState.LOADING) View.VISIBLE else View.GONE
+
+            if (!viewModel.listIsEmpty()) {
+                adapter.setNetworkState(it)
+            }
+        }
     }
 
-    override fun onStart() {
-        super.onStart()
-        Log.v("APP", "MainActivity starting");
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.v("APP", "MainActivity resuming");
-
-    }
-
-    override fun onPause() {
-        Log.v("APP", "MainActivity pausing");
-        super.onPause()
-    }
-
-    override fun onStop() {
-        Log.v("APP", "MainActivity stopping");
-        super.onStop()
+    private fun getViewModel(): MainViewModel{
+        return ViewModelProvider(this, MainViewModelFactory(productsRepository))[MainViewModel::class.java]
     }
 
 }

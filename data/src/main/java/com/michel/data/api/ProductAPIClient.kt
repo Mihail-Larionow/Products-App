@@ -6,19 +6,15 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import java.security.SecureRandom
-import java.security.cert.CertificateException
-import java.security.cert.X509Certificate
 import java.util.concurrent.TimeUnit
-import javax.net.ssl.SSLContext
-import javax.net.ssl.TrustManager
-import javax.net.ssl.X509TrustManager
 
 
-const val BASE_URL = "https://dummyjson.com/products/"
+const val BASE_URL = "https://dummyjson.com/"
+const val START_SKIP = 0
+const val DEFAULT_LIMIT = 20
 
 class ProductDBClient {
-    fun getClient(): IProductDB{
+    fun getClient(): ProductAPI{
 
         val requestInterceptor = Interceptor{chain ->
 
@@ -49,7 +45,7 @@ class ProductDBClient {
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(IProductDB::class.java)
+            .create(ProductAPI::class.java)
     }
 
 }

@@ -2,15 +2,16 @@ package com.michel.productsapp.presentation.single
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.michel.data.repository.ProductDetailsRepository
+import com.michel.data.repository.SingleProductRepository
 
+@Suppress("UNCHECKED_CAST")
 class SingleProductViewModelFactory(
-    private val productDetailsRepository: ProductDetailsRepository,
+    private val singleProductRepository: SingleProductRepository,
     private val productId: Int
 ): ViewModelProvider.Factory{
 
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return SingleProductViewModel(productDetailsRepository, productId = productId) as T
+        return SingleProductViewModel(singleProductRepository, productId = productId) as T
     }
 }

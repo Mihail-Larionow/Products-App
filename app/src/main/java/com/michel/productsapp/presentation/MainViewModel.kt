@@ -1,24 +1,28 @@
 package com.michel.productsapp.presentation
 
-import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.michel.domain.usecase.LoadDataUseCase
+import androidx.paging.PagingData
+import com.michel.data.network.NetworkState
+import com.michel.data.repository.ProductsRepository
+import com.michel.data.model.Product
 import com.michel.productsapp.model.LoadEvent
 import com.michel.productsapp.model.MainEvent
-import com.michel.productsapp.model.MainState
 
 class MainViewModel(
-    private val loadDataUseCase: LoadDataUseCase
+    private val productsRepository: ProductsRepository
 ) : ViewModel() {
 
-    private val stateMutable = MutableLiveData<MainState>()
-    val state: LiveData<MainState> = stateMutable
+    val productPagedList: LiveData<PagingData<Product>> by lazy{
+        productsRepository.fetch()
+    }
 
-    init{
-        Log.v("APP", "ViewModel starting")
-        stateMutable.value =  MainState(something = "nothing")
+    val networkState: LiveData<NetworkState> by lazy{
+        productsRepository.getNetworkState()
+    }
+
+    fun listIsEmpty(): Boolean{
+        return productPagedList.value == null
     }
 
     override fun onCleared() {
@@ -32,11 +36,6 @@ class MainViewModel(
     }
 
     private fun loadData() {
-
-        val data = loadDataUseCase.execute()
-        stateMutable.value = MainState(
-            something = data.something
-        )
 
     }
 

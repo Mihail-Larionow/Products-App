@@ -40,6 +40,9 @@ dependencies {
     implementation(libs.rxandroid)
     implementation(libs.adapter.rxjava2)
     implementation(libs.androidx.lifecycle.livedata)
+    implementation(libs.androidx.paging.runtime)
+    implementation(libs.androidx.lifecycle.extensions)
+    implementation(libs.androidx.paging.rxjava2)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
 }
