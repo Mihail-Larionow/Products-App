@@ -2,7 +2,9 @@ package com.michel.productsapp.presentation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import androidx.paging.map
 import com.michel.data.network.NetworkState
 import com.michel.data.repository.ProductsRepository
 import com.michel.data.model.Product
@@ -14,15 +16,11 @@ class MainViewModel(
 ) : ViewModel() {
 
     val productPagedList: LiveData<PagingData<Product>> by lazy{
-        productsRepository.fetch()
+        productsRepository.fetch(this.viewModelScope)
     }
 
     val networkState: LiveData<NetworkState> by lazy{
         productsRepository.getNetworkState()
-    }
-
-    fun listIsEmpty(): Boolean{
-        return productPagedList.value == null
     }
 
     override fun onCleared() {

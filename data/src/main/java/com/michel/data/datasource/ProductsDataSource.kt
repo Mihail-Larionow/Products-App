@@ -31,8 +31,6 @@ class ProductsDataSource(
 
         return try{
             val response = api.getProducts(skip, limit)
-            Log.i("datasource", "${response.body()?.skip} ${response.body()} ")
-
             val products = checkNotNull(response.body()).products
             val nextKey = if(products.size < DEFAULT_LIMIT) null else skip + DEFAULT_LIMIT
             networkState.postValue(NetworkState.LOADED)
@@ -40,7 +38,7 @@ class ProductsDataSource(
         }
         catch (e: Exception){
             networkState.postValue(NetworkState.ERROR)
-            Log.e("ProductsDataSource", "Error")
+            Log.e("ProductsDataSource", "${e.message}")
             LoadResult.Error(e)
         }
 

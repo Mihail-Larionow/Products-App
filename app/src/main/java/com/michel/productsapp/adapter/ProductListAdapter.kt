@@ -82,6 +82,7 @@ class ProductListAdapter(private val context: Context): PagingDataAdapter<Produc
 
 class ProductItemViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
     fun bind(product: Product?, context: Context){
+        itemView.findViewById<TextView>(R.id.product_price).text = "${product?.price}$"
         itemView.findViewById<TextView>(R.id.product_title).text = product?.title
         itemView.findViewById<TextView>(R.id.product_description).text = product?.description
 
@@ -101,7 +102,8 @@ class NetworkStateItemViewHolder(itemView: View): RecyclerView.ViewHolder(itemVi
     fun bind(networkState: NetworkState?){
         val progressBar = itemView.findViewById<ProgressBar>(R.id.progress_bar)
 
-        if(networkState != null && networkState == NetworkState.LOADING){
+        if(networkState != null &&
+            (networkState == NetworkState.LOADING || networkState == NetworkState.ERROR)){
             progressBar.visibility = View.VISIBLE
         }
         else{

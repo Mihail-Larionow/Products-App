@@ -1,6 +1,7 @@
 package com.michel.productsapp.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import androidx.activity.enableEdgeToEdge
@@ -63,12 +64,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewModel.networkState.observe(this) {
-            progressBar.visibility =
-                if (viewModel.listIsEmpty() && it == NetworkState.LOADING) View.VISIBLE else View.GONE
-
-            if (!viewModel.listIsEmpty()) {
                 adapter.setNetworkState(it)
-            }
         }
     }
 

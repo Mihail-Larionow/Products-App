@@ -1,23 +1,26 @@
 package com.michel.data.repository
 
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.switchMap
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import androidx.paging.liveData
 import com.michel.data.api.DEFAULT_LIMIT
 import com.michel.data.api.ProductAPI
 import com.michel.data.datasource.ProductsDataSourceFactory
 import com.michel.data.network.NetworkState
 import com.michel.data.model.Product
+import kotlinx.coroutines.CoroutineScope
 
 class ProductsRepository(private val productAPI: ProductAPI) {
 
     private lateinit var productList: LiveData<PagingData<Product>>
     private lateinit var productsDataSourceFactory: ProductsDataSourceFactory
 
-    fun fetch(): LiveData<PagingData<Product>>{
+    fun fetch(scope: CoroutineScope): LiveData<PagingData<Product>>{
         productsDataSourceFactory = ProductsDataSourceFactory(productAPI = productAPI)
 
         val config = PagingConfig(
@@ -31,7 +34,7 @@ class ProductsRepository(private val productAPI: ProductAPI) {
             pagingSourceFactory = productsDataSourceFactory
         )
 
-        productList = pager.liveData
+        productList = pager.liveData.cachedIn(scope)
 
         return productList
     }

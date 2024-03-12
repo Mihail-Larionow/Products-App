@@ -45,15 +45,16 @@ class SingleProduct : AppCompatActivity() {
 
         viewModel.networkState.observe(this) {
             findViewById<ProgressBar>(R.id.progress_bar).visibility =
-                if (it == NetworkState.LOADING) View.VISIBLE else View.GONE
-            findViewById<TextView>(R.id.error_text).visibility =
-                if (it == NetworkState.ERROR) View.VISIBLE else View.GONE
+                if (it == NetworkState.LOADING || it == NetworkState.ERROR)
+                    View.VISIBLE else View.GONE
         }
     }
 
     private fun bindUI(product: Product){
+        findViewById<TextView>(R.id.product_brand).text = product.brand
+        findViewById<TextView>(R.id.product_price).text = "${product.price}$ (${product.discountPercentage}%)"
         findViewById<TextView>(R.id.product_title).text = product.title
-        findViewById<TextView>(R.id.product_description).text = product.title
+        findViewById<TextView>(R.id.product_description).text = product.description
 
         Glide.with(this)
             .load(product.thumbnail)

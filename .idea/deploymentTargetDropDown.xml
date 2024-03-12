@@ -10,12 +10,12 @@
               <deviceKey>
                 <Key>
                   <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="D:\ANDROID\.android\avd\Tiramisu.avd" />
+                  <value value="D:\ANDROID\.android\avd\Lollipop.avd" />
                 </Key>
               </deviceKey>
             </Target>
           </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-03-11T23:11:57.453449Z" />
+          <timeTargetWasSelectedWithDropDown value="2024-03-12T11:12:37.341557300Z" />
         </State>
       </entry>
     </value>
