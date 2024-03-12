@@ -2,11 +2,11 @@
 
 ![stage](https://img.shields.io/badge/task-vk-blue.svg)
 
-_Приложение можно установить и запустить на своем android-устройстве, скачав GETPRODUCTS.APK файл._
+_(Приложение можно установить и запустить на своем android-устройстве, скачав GETPRODUCTS.APK файл)_
 
-Для выполнения профильного задания было необходимо создать приложение, которое подгружает данные о продуктах из интернета. 
+Для выполнения профильного задания необходимо было создать приложение, которое подгружает данные о продуктах из интернета. 
 
-<p align="center"><img src="https://github.com/Mihail-Larionow/Products-App/blob/main/images/working_application.gif"/></p> 
+<p align="center"><img src="https://github.com/Mihail-Larionow/Products-App/blob/main/images/working_application.gif" width=200 height=430/></p> 
 
 Обязательные условия:
 - Отображение полей title, description и thumbnail ✔️ 
@@ -17,7 +17,7 @@ _Приложение можно установить и запустить на
 - Отображение дополнительных полей
 - Возможность перехода на страницу продукта
 
-<p align="center"><img src="https://github.com/Mihail-Larionow/Products-App/blob/main/images/single_product.gif"/></p>
+<p align="center"><img src="https://github.com/Mihail-Larionow/Products-App/blob/main/images/single_product.gif" width=200 height=430/></p>
 
 ## Архитектура
 
@@ -31,7 +31,7 @@ _Приложение можно установить и запустить на
 
 ## Технологии
 
-Основной используемый язык программирования - _**Kotlin**_, который обеспечивает высокую производительность, безопасность и читаемость кода. С его помощью реализованы пользовательские интерфейсы _**(Android Views)**_.
+Основной используемый язык программирования — _**Kotlin**_, который обеспечивает высокую производительность, безопасность и читаемость кода. С его помощью реализованы пользовательские интерфейсы _**(Android Views)**_.
 
 Для выполнения сетевых запросов к серверу используется _**Retrofit**_, который облегчает процесс создания и отправки HTTP-запросов.
 
@@ -45,6 +45,6 @@ _Приложение можно установить и запустить на
 
 ## Обработка исключений
 
-<p align="center"><img src="https://github.com/Mihail-Larionow/Products-App/blob/main/images/network_exception.gif"/></p>
+<p align="center"><img src="https://github.com/Mihail-Larionow/Products-App/blob/main/images/network_exception.gif" width=200 height=430/></p>
 
 В приложении были учтены и обработаны различные возможные ошибки, которые могут возникнуть в процессе его использования, что позволило сделать приложение более стабильным и надежным. 
